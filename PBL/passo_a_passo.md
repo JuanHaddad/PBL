@@ -21,3 +21,6 @@ Abra o seguinte app:
 lá você vai habilitar a conexão tcp/ip do seu banco
 
 concordo
+
+
+teste juan
