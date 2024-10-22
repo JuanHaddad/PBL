@@ -19,3 +19,5 @@ Abra o seguinte app:
 #### SQL SERVER 2022 CONFIGURATION MANAGER
 
 lá você vai habilitar a conexão tcp/ip do seu banco
+
+concordo
