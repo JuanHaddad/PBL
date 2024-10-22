@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Adicionar Usuário</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Adicionar Novo Usuário</h1>
+<form action="#" th:action="@{/salvarUsuario}" th:object="${usuario}" method="post">
+  <label for="nome">Nome:</label>
+  <input type="text" id="nome" th:field="*{nome}" placeholder="Digite o nome do usuário"/>
+  <button type="submit">Salvar</button>
+</form>
+<br>
+<a href="/usuarios">Voltar para lista de usuários</a>
+</body>
+</html>

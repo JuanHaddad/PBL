@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Usuários Cadastrados</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Ações</th>
+    </tr>
+    <tr th:each="usuario : ${usuarios}">
+        <td th:text="${usuario.id}">ID</td>
+        <td th:text="${usuario.nome}">Nome</td>
+        <td>
+            <a th:href="@{/deletarUsuario/{id}(id=${usuario.id})}">Excluir</a>
+        </td>
+    </tr>
+</table>
+<a href="/adicionarUsuario">Adicionar Novo Usuário</a>
+</body>
+</html>
