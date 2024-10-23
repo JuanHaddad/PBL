@@ -26,8 +26,13 @@ public class OndaController {
             @RequestParam("erroMaximo") double erroMaximo,
             Model model
     ) {
-        List<PontoOnda> pontos = simuladorOnda.calcularOnda(frequencia, comprimentoOnda, duracao, erroMaximo);
-        model.addAttribute("pontos", pontos);
+        // Adiciona os parâmetros ao modelo para passá-los ao Thymeleaf
+        model.addAttribute("frequencia", frequencia);
+        model.addAttribute("comprimentoOnda", comprimentoOnda);
+        model.addAttribute("duracao", duracao);
+        model.addAttribute("erroMaximo", erroMaximo);
+
+        // Renderiza o template 'grafico'
         return "grafico";
     }
     @GetMapping("/formulario")
