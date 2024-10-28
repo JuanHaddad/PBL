@@ -1,9 +1,9 @@
 // Obtém os parâmetros da URL usando URLSearchParams
 const urlParams = new URLSearchParams(window.location.search);
-const duracaoSimulacao = parseFloat(urlParams.get('duracao')) || 10;  // Se não houver valor, usa 10 segundos como padrão
-const frequencia = parseFloat(urlParams.get('frequencia')) || 0.5;  // Se não houver valor, usa 0.5 Hz como padrão
-const comprimentoOnda = parseFloat(urlParams.get('comprimentoOnda')) || 0.2;  // Se não houver valor, usa 0.2 metros como padrão
-const erroMaximo = parseFloat(urlParams.get('erroMaximo')) || 0.00000001;  // Se não houver valor, usa o erro padrão
+const duracaoSimulacao = parseFloat(urlParams.get('duracao'));  // Se não houver valor, usa 10 segundos como padrão
+const frequencia = parseFloat(urlParams.get('frequencia'));
+const comprimentoOnda = parseFloat(urlParams.get('comprimentoOnda'));  // Se não houver valor, usa 0.2 metros como padrão
+const erroMaximo = parseFloat(urlParams.get('erroMaximo'));  // Se não houver valor, usa o erro padrão
 
 console.log("Duração da Simulação:", duracaoSimulacao);
 console.log("Frequência:", frequencia);
@@ -50,8 +50,8 @@ function calcularPontosOnda(t) {
 // Função para calcular a posição do ponto fixo ao longo do comprimento de onda
 function calcularPosicaoPonto(t) {
     // O ponto vai percorrer o gráfico de 0 a 1 conforme o comprimento de onda
-    let posicaoX = (t * comprimentoOnda) % 2;  // A posição vai "ciclar" de 0 a 1 repetidamente com o comprimento de onda
-    return posicaoX;
+    let posicaoX = (frequencia * comprimentoOnda) % 2;  // A posição vai "ciclar" de 0 a 1 repetidamente com o comprimento de onda
+    return posicaoX;f
 }
 
 // Função para calcular o valor da onda no ponto X para o tempo t
@@ -106,7 +106,7 @@ var chart = new Chart(ctx, {
 // Função para atualizar o gráfico com animação
 function atualizarGrafico() {
     if (t <= duracaoSimulacao) {
-        console.log("Atualizando gráfico, t =", t);
+        console.log("Atualizando gráfico, t = ", t);
         let pontosOnda = calcularPontosOnda(t);
 
         chart.data.labels = pontosOnda.dadosX;  // Atualizamos os valores de x
@@ -122,7 +122,7 @@ function atualizarGrafico() {
         t += passoTempo;  // Avançamos o tempo
         setTimeout(atualizarGrafico, 1000 / fps);  // Próximo frame da animação
     } else {
-        console.log("Animação finalizada, t =", t);
+        console.log("Animação finalizada no TEMPO(t) = ", t);
     }
 }
 
