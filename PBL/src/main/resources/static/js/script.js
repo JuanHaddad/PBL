@@ -51,7 +51,7 @@ function calcularPontosOnda(t) {
 function calcularPosicaoPonto(t) {
     // O ponto vai percorrer o gráfico de 0 a 1 conforme o comprimento de onda
     let posicaoX = (frequencia * comprimentoOnda) % 2;  // A posição vai "ciclar" de 0 a 1 repetidamente com o comprimento de onda
-    return posicaoX;f
+    return posicaoX;
 }
 
 // Função para calcular o valor da onda no ponto X para o tempo t
