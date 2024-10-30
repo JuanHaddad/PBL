@@ -14,8 +14,14 @@ let t = 0;  // Tempo inicial
 const passoTempo = 0.0175;  // Passo de tempo (em segundos) NÃO MUDA ISSO DE FORMA ALGUMA
 const fps = 60;  // Frames por segundo da animação
 
-// Função para calcular o seno usando série de Taylor
+// Função para calcular o seno usando série de Taylor com ajuste de argumento
 function calcularSenoTaylor(valor, erroMaximo) {
+    // Reduz o argumento ao intervalo [-π, π] para melhorar a precisão da série de Taylor
+    valor = valor % (2 * Math.PI);
+    if (valor > Math.PI) valor -= 2 * Math.PI;
+    else if (valor < -Math.PI) valor += 2 * Math.PI;
+
+    // Aplicando série de Taylor
     let termo = valor;  // Primeiro termo da série (x^1 / 1!)
     let soma = termo;
     let n = 1;
@@ -33,7 +39,7 @@ function calcularSenoTaylor(valor, erroMaximo) {
 function calcularPontosOnda(t) {
     let dadosX = [];
     let dadosY = [];
-    const passoX = 0.01;  // Espaçamento entre pontos (1 cm)
+    const passoX = 0.01;  // Reduzimos o passo ainda mais para capturar detalhes finos
 
     for (let x = 0; x <= 2; x += passoX) {
         // Fórmula da onda: y(x, t) = sin(2π(f * t - x / λ)) usando Taylor
@@ -48,14 +54,12 @@ function calcularPontosOnda(t) {
 
 // Função para calcular a posição do ponto fixo ao longo do comprimento de onda
 function calcularPosicaoPonto(t) {
-    // O ponto vai percorrer o gráfico de 0 a 1 conforme o comprimento de onda
-    let posicaoX = (frequencia * comprimentoOnda) % 2;  // A posição vai "ciclar" de 0 a 1 repetidamente com o comprimento de onda
+    let posicaoX = (frequencia * comprimentoOnda * t) % 2;
     return posicaoX;
 }
 
 // Função para calcular o valor da onda no ponto X para o tempo t
 function calcularValorNoPonto(posicaoX, t) {
-    // Fórmula da onda no ponto x = posicaoX
     let argumento = 2 * Math.PI * (frequencia * t - posicaoX / comprimentoOnda);
     let valorY = calcularSenoTaylor(argumento, erroMaximo);
     return valorY;
@@ -63,13 +67,14 @@ function calcularValorNoPonto(posicaoX, t) {
 
 // Configurando o gráfico com Chart.js
 var ctx = document.getElementById('graficoOnda').getContext('2d');
+
 var chart = new Chart(ctx, {
     type: 'line',
     data: {
         labels: [],  // Iniciamos vazio
         datasets: [{
             label: 'Onda Transversal',
-            data: [],
+            data: [],  // Inicialmente vazio
             borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
             fill: false
@@ -85,7 +90,7 @@ var chart = new Chart(ctx, {
         }]
     },
     options: {
-        animation: false,  // Desabilitamos a animação nativa, faremos manualmente
+        animation: false,  // Desabilitamos a animação nativa
         scales: {
             x: {
                 type: 'linear',
@@ -102,18 +107,19 @@ var chart = new Chart(ctx, {
     }
 });
 
-// Função para atualizar o gráfico com animação
+// Função para atualizar o gráfico com animação para a onda e o ponto de referência
 function atualizarGrafico() {
     if (t <= duracaoSimulacao) {
         console.log("Atualizando gráfico, t = ", t);
-        let pontosOnda = calcularPontosOnda(t);
 
+        // Calcula os pontos da onda para o tempo atual
+        let pontosOnda = calcularPontosOnda(t);
         chart.data.labels = pontosOnda.dadosX;  // Atualizamos os valores de x
-        chart.data.datasets[0].data = pontosOnda.dadosY;  // Atualizamos os valores de y
+        chart.data.datasets[0].data = pontosOnda.dadosY;  // Atualizamos os valores de y da onda
 
         // O ponto vermelho se move ao longo do comprimento de onda
-        let posicaoX = calcularPosicaoPonto(t);  // O ponto se move de acordo com o comprimento de onda
-        let valorNoPonto = calcularValorNoPonto(posicaoX, t);  // Calcula o valor de y no ponto x = posicaoX
+        let posicaoX = calcularPosicaoPonto(t);
+        let valorNoPonto = calcularValorNoPonto(posicaoX, t);
         chart.data.datasets[1].data = [{ x: posicaoX, y: valorNoPonto }];  // Atualiza a posição do ponto
 
         chart.update();
