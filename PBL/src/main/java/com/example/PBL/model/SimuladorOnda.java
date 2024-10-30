@@ -45,7 +45,6 @@ public class SimuladorOnda {
             soma += termo;
             n++;
         }
-
         return soma;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.PBL.controller;
 
-import com.example.PBL.model.SimuladorOnda;
-import com.example.PBL.model.SimuladorOnda.PontoOnda;
+import com.example.PBL.model.Simulacao;
+import com.example.PBL.service.SimulacaoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +12,10 @@ import java.util.List;
 @Controller
 public class OndaController {
 
-    private final SimuladorOnda simuladorOnda;
+    private final SimulacaoService simulacaoService;
 
-    public OndaController(SimuladorOnda simuladorOnda) {
-        this.simuladorOnda = simuladorOnda;
+    public OndaController(SimulacaoService simulacaoService) {
+        this.simulacaoService = simulacaoService;
     }
 
     @GetMapping("/simularOnda")
@@ -26,17 +26,48 @@ public class OndaController {
             @RequestParam("erroMaximo") double erroMaximo,
             Model model
     ) {
+        // Cria um novo objeto Simulacao com os dados do formulário
+        Simulacao simulacao = new Simulacao();
+        simulacao.setFrequencia(frequencia);
+        simulacao.setComprimentoOnda(comprimentoOnda);
+        simulacao.setDuracao(duracao);
+        simulacao.setErroMaximo(erroMaximo);
+
+        // Salva a simulação usando o serviço
+        simulacaoService.salvarSimulacao(simulacao);
+
         // Adiciona os parâmetros ao modelo para passá-los ao Thymeleaf
         model.addAttribute("frequencia", frequencia);
         model.addAttribute("comprimentoOnda", comprimentoOnda);
         model.addAttribute("duracao", duracao);
         model.addAttribute("erroMaximo", erroMaximo);
 
-        // Renderiza o template 'grafico'
+        // Recupera o histórico de simulações
+        List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
+        model.addAttribute("historicoSimulacoes", historicoSimulacoes);
+
         return "grafico";
     }
+
     @GetMapping("/formulario")
     public String exibirFormulario() {
-        return "formulario";  // Nome do template (sem a extensão .html)
+        return "formulario";
+    }
+
+
+    @GetMapping("/resimularOnda")
+    public String resimularOnda(@RequestParam("id") Long id, Model model) {
+        Simulacao simulacao = simulacaoService.buscarSimulacaoPorId(id);
+        if (simulacao != null) {
+            model.addAttribute("frequencia", simulacao.getFrequencia());
+            model.addAttribute("comprimentoOnda", simulacao.getComprimentoOnda());
+            model.addAttribute("duracao", simulacao.getDuracao());
+            model.addAttribute("erroMaximo", simulacao.getErroMaximo());
+        }
+
+        List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
+        model.addAttribute("historicoSimulacoes", historicoSimulacoes);
+
+        return "grafico";
     }
 }

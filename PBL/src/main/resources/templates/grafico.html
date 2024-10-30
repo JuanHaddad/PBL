@@ -3,18 +3,50 @@
 <head>
     <title>Gráfico da Onda Transversal</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript">
+        const parametrosSimulacao = {
+            frequencia: [[${frequencia}]],
+            comprimentoOnda: [[${comprimentoOnda}]],
+            duracao: [[${duracao}]],
+            erroMaximo: [[${erroMaximo}]]
+        };
+    </script>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 <h1>Gráfico da Onda Transversal</h1>
 
-<canvas id="graficoOnda"></canvas>
+<!-- Container para centralizar e redimensionar o gráfico -->
+<div class="grafico-container">
+    <canvas id="graficoOnda"></canvas>
+</div>
+
+<!-- Seção de histórico de simulações -->
+<h2>Histórico de Simulações</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Frequência</th>
+        <th>Comprimento de Onda</th>
+        <th>Duração</th>
+        <th>Erro Máximo</th>
+        <th>Ação</th>
+    </tr>
+    <tr th:each="simulacao : ${historicoSimulacoes}">
+        <td th:text="${simulacao.id}"></td>
+        <td th:text="${simulacao.frequencia}"></td>
+        <td th:text="${simulacao.comprimentoOnda}"></td>
+        <td th:text="${simulacao.duracao}"></td>
+        <td th:text="${simulacao.erroMaximo}"></td>
+        <td>
+            <a th:href="@{/resimularOnda(id=${simulacao.id})}" class="btn-resimular">Re-simular</a>
+        </td>
+    </tr>
+</table>
 
 <!-- Botão para voltar ao formulário -->
 <br><br>
 <a href="/formulario" class="btn-voltar">Voltar ao formulário</a>
-
 <script th:src="@{/js/script.js}"></script>
-
 </body>
 </html>

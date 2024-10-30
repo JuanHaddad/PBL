@@ -1,9 +1,8 @@
 // Obtém os parâmetros da URL usando URLSearchParams
-const urlParams = new URLSearchParams(window.location.search);
-const duracaoSimulacao = parseFloat(urlParams.get('duracao'));  // Se não houver valor, usa 10 segundos como padrão
-const frequencia = parseFloat(urlParams.get('frequencia'));
-const comprimentoOnda = parseFloat(urlParams.get('comprimentoOnda'));  // Se não houver valor, usa 0.2 metros como padrão
-const erroMaximo = parseFloat(urlParams.get('erroMaximo'));  // Se não houver valor, usa o erro padrão
+const duracaoSimulacao = parametrosSimulacao.duracao;
+const frequencia = parametrosSimulacao.frequencia;
+const comprimentoOnda = parametrosSimulacao.comprimentoOnda;
+const erroMaximo = parametrosSimulacao.erroMaximo;
 
 console.log("Duração da Simulação:", duracaoSimulacao);
 console.log("Frequência:", frequencia);

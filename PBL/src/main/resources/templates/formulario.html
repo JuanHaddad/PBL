@@ -9,19 +9,18 @@
 
 <form action="#" th:action="@{/simularOnda}" method="get">
     <label for="frequencia">Frequência (Hz):</label>
-    <input type="number" step="0.01" name="frequencia" id="frequencia" min="0" max="0.5" required><br>
+    <input type="number" step="0.01" name="frequencia" id="frequencia" min="0" max="0.5" required>
 
     <label for="comprimentoOnda">Comprimento de Onda (m):</label>
-    <input type="number" step="0.01" name="comprimentoOnda" id="comprimentoOnda" min="0.2" max="2" required><br>
+    <input type="number" step="0.01" name="comprimentoOnda" id="comprimentoOnda" min="0.2" max="2" required>
 
     <label for="duracao">Duração (s):</label>
-    <input type="number" name="duracao" id="duracao" min="1" max="10" required><br>
+    <input type="number" name="duracao" id="duracao" min="1" max="10" required>
 
     <label for="erroMaximo">Erro Máximo:</label>
-    <input type="number" name="erroMaximo" id="erroMaximo" min="0.0000000000000000000001" required><br>
+    <input type="number" name="erroMaximo" id="erroMaximo" min="0.0000000000000000000001" required>
 
     <button type="submit">Simular</button>
 </form>
-
 </body>
 </html>

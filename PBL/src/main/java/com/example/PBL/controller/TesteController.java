@@ -4,10 +4,7 @@ import com.example.PBL.model.Usuario;
 import com.example.PBL.repositorio.TesteRepositorio;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,10 +36,9 @@ public class TesteController {
         return "redirect:/usuarios";
     }
 
-    // Novo método para deletar usuário por ID
     @GetMapping("/deletarUsuario/{id}")
     public String deletarUsuario(@PathVariable Long id) {
-        testeRepositorio.deleteById(id);  // Exclui o usuário com o ID especificado
-        return "redirect:/usuarios";  // Redireciona de volta para a página de listagem
+        testeRepositorio.deleteById(id);
+        return "redirect:/usuarios";
     }
 }
