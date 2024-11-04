@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Histórico de Simulações</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1>Histórico de Simulações</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Frequência</th>
+        <th>Comprimento de Onda</th>
+        <th>Duração</th>
+        <th>Erro Máximo</th>
+        <th>Ação</th>
+    </tr>
+    <tr th:each="simulacao : ${historicoSimulacoes}">
+        <td th:text="${simulacao.id}"></td>
+        <td th:text="${simulacao.frequencia}"></td>
+        <td th:text="${simulacao.comprimentoOnda}"></td>
+        <td th:text="${simulacao.duracao}"></td>
+        <td th:text="${simulacao.erroMaximo}"></td>
+        <td>
+            <a th:href="@{/resimularOnda(id=${simulacao.id})}" class="btn-ver">Ver Gráfico</a>
+        </td>
+    </tr>
+</table>
+
+<!-- Botão para voltar ao menu inicial -->
+<br>
+<a href="/" class="btn-voltar">Voltar ao Menu</a>
+</body>
+</html>

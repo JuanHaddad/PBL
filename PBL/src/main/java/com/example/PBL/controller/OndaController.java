@@ -43,8 +43,8 @@ public class OndaController {
         model.addAttribute("erroMaximo", erroMaximo);
 
         // Recupera o histórico de simulações
-        List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
-        model.addAttribute("historicoSimulacoes", historicoSimulacoes);
+//        List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
+//        model.addAttribute("historicoSimulacoes", historicoSimulacoes);
 
         return "grafico";
     }
@@ -70,4 +70,15 @@ public class OndaController {
 
         return "grafico";
     }
+    @GetMapping("/")
+    public String exibirMenuInicial() {
+        return "menu";
+    }
+    @GetMapping("/historico")
+    public String exibirHistorico(Model model) {
+        List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
+        model.addAttribute("historicoSimulacoes", historicoSimulacoes);
+        return "historico";
+    }
+
 }
