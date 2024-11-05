@@ -24,7 +24,7 @@ public class SimulacaoService {
     }
 
     // Novo método para buscar uma simulação específica por ID
-    public Simulacao buscarSimulacaoPorId(Long id) {
-        return simulacaoRepositorio.findById(id).orElse(null);
+    public Simulacao buscarSimulacaoPorId(Long id_simulacao) {
+        return simulacaoRepositorio.findById(id_simulacao).orElse(null);
     }
 }

@@ -20,11 +20,8 @@ table {
     margin-bottom: 20px;
 }
 
-table, th, td {
-    border: 1px solid #ccc;
-}
-
 th, td {
+    border: 1px solid #ccc;
     padding: 10px;
     text-align: left;
 }
@@ -33,22 +30,31 @@ th {
     background-color: #f2f2f2;
 }
 
-/* Estilo para links */
-a {
-
+/* Estilo para links e botões */
+a, button {
     display: inline-block;
     background-color: #4CAF50;
     color: white;
-    padding: 10px 15px;
+    padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
+    cursor: pointer;
 }
 
-a:hover {
+a:hover, button:hover {
     background-color: #45a049;
 }
 
-/* Estilo para o formulário */
+/* Estilo específico para o botão de exclusão */
+.btn-excluir {
+    background-color: #f44336;
+}
+
+.btn-excluir:hover {
+    background-color: #d32f2f;
+}
+
+/* Formulário */
 form {
     width: 300px;
     margin: 0 auto;
@@ -59,58 +65,12 @@ label, input {
     margin-bottom: 10px;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
     width: 100%;
     padding: 8px;
-    box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-
-/* Estilo para o botão de exclusão */
-/* Estilo para links */
-a {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-a:hover {
-    background-color: #45a049;
-}
-
-.btn-excluir {
-    background-color: #f44336;
-    color: white;
-}
-
-.btn-excluir:hover {
-    background-color: #d32f2f;
-}
-
-.btn-voltar {
-    background-color: #4CAF50;
-}
-
-.btn-voltar:hover {
-    background-color: #45a049;
+    box-sizing: border-box;
 }
 
 /* Centralizar o gráfico e definir tamanho */
@@ -121,13 +81,13 @@ a:hover {
 }
 
 #graficoOnda {
-    width: 909px; Ajuste conforme necessário
-    height: 454px; Ajuste conforme necessário
+    width: 909px;
+    height: 454px;
     max-width: 100%;
     max-height: 100%;
 }
 
-/* Estilo para o menu inicial */
+/* Menu inicial */
 .menu-container {
     display: flex;
     flex-direction: column;
@@ -139,6 +99,6 @@ a:hover {
     margin: 10px;
     padding: 15px 25px;
     font-size: 18px;
-    text-align: center;
     width: 200px;
+    text-align: center;
 }

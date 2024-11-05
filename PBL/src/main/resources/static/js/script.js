@@ -1,9 +1,11 @@
 // Obtém os parâmetros da URL usando URLSearchParams
+const id_simulacao = parametrosSimulacao.id_simulacao;
 const duracaoSimulacao = parametrosSimulacao.duracao;
 const frequencia = parametrosSimulacao.frequencia;
 const comprimentoOnda = parametrosSimulacao.comprimentoOnda;
 const erroMaximo = parametrosSimulacao.erroMaximo;
 
+console.log("id_simulacao: ", id_simulacao);
 console.log("Duração da Simulação:", duracaoSimulacao);
 console.log("Frequência:", frequencia);
 console.log("Comprimento de Onda:", comprimentoOnda);
@@ -133,3 +135,39 @@ function atualizarGrafico() {
 
 // Iniciar a animação do gráfico
 atualizarGrafico();
+
+
+function mostrarPontoNoTempo() {
+    const tempo = parseFloat(document.getElementById('tempo').value);
+
+    if (!id_simulacao || isNaN(tempo) || tempo < 0 || tempo > 10) {
+            alert("Por favor, insira um valor válido para o tempo entre 0 e 10.");
+            return;
+        }
+
+    fetch(`/pontoNoTempo?id_simulacao=${id_simulacao}&tempo=${tempo}`)
+        .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro na requisição: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const posicaoY = data.posicaoY;
+                    if (posicaoY !== null) {
+                        // Atualiza o ponto fixo em x = 1
+                        chart.data.datasets[1].data = [{ x: 1, y: posicaoY }];
+
+                        // Atualiza a onda completa para cruzar o ponto fixo
+                        const { dadosX, dadosY } = calcularPontosOnda(tempo);
+                        chart.data.labels = dadosX;
+                        chart.data.datasets[0].data = dadosY;
+
+                        chart.update();
+                    } else {
+                        alert("Ponto não encontrado para o tempo especificado.");
+                    }
+                })
+                .catch(error => console.error("Erro ao buscar o ponto:", error));
+}
+

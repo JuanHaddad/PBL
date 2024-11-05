@@ -12,7 +12,7 @@ public class Simulacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id_simulacao;
 
     private double frequencia;
     private double comprimentoOnda;

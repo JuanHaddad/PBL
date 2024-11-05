@@ -6,6 +6,7 @@
 </head>
 <body>
 <h1>Histórico de Simulações</h1>
+
 <table>
     <tr>
         <th>ID</th>
@@ -16,19 +17,17 @@
         <th>Ação</th>
     </tr>
     <tr th:each="simulacao : ${historicoSimulacoes}">
-        <td th:text="${simulacao.id}"></td>
+        <td th:text="${simulacao.id_simulacao}"></td>
         <td th:text="${simulacao.frequencia}"></td>
         <td th:text="${simulacao.comprimentoOnda}"></td>
         <td th:text="${simulacao.duracao}"></td>
         <td th:text="${simulacao.erroMaximo}"></td>
         <td>
-            <a th:href="@{/resimularOnda(id=${simulacao.id})}" class="btn-ver">Ver Gráfico</a>
+            <a th:href="@{/resimularOnda(id_simulacao=${simulacao.id_simulacao})}" class="btn-ver">Ver Gráfico</a>
         </td>
     </tr>
 </table>
 
-<!-- Botão para voltar ao menu inicial -->
-<br>
 <a href="/" class="btn-voltar">Voltar ao Menu</a>
 </body>
 </html>

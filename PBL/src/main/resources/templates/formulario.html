@@ -7,7 +7,7 @@
 <body>
 <h1>Simulação da Onda Transversal</h1>
 
-<form action="#" th:action="@{/simularOnda}" method="get">
+<form th:action="@{/simularOnda}" method="get">
     <label for="frequencia">Frequência (Hz):</label>
     <input type="number" step="0.01" name="frequencia" id="frequencia" min="0" max="0.5" required>
 
@@ -20,7 +20,8 @@
     <label for="erroMaximo">Erro Máximo:</label>
     <input type="number" name="erroMaximo" id="erroMaximo" step="any" max="1" required>
 
-    <button type="submit">Simular</button> <a href="/" class="btn-voltar">Voltar ao Menu</a>
+    <button type="submit">Simular</button>
+    <a href="/" class="btn-voltar">Voltar ao Menu</a>
 </form>
 </body>
 </html>
