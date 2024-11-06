@@ -2,14 +2,38 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Menu Inicial</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style-menu.css}" />
 </head>
 <body>
-<h1>Menu Inicial</h1>
 
-<div class="menu-container">
-    <a th:href="@{/formulario}" class="btn">Ir para Formulário</a>
-    <a th:href="@{/historico}" class="btn">Ir para Histórico</a>
+<!-- Barra superior com logo e boas-vindas -->
+<div class="header">
+    <div class="logo">
+        <span>Project Based Learning - EC3</span>
+    </div>
+    <div class="welcome-message">
+        Bem vindo, usuário!
+    </div>
 </div>
+
+<!-- Container principal de menu -->
+<div class="menu-container">
+    <div class="menu-card">
+        <h2>Cálculo</h2>
+        <h3>Simular Ondas</h3>
+        <p>Acesse para realizar novos cálculos e simulações.</p>
+        <a th:href="@{/formulario}" class="btn">Acessar</a>
+    </div>
+
+    <div class="menu-card">
+        <h2>Histórico</h2>
+        <h3>Simulações Passadas</h3>
+        <p>Acesse para visualizar cálculos passados.</p>
+        <a th:href="@{/historico}" class="btn">Acessar</a>
+    </div>
+</div>
+
+<a th:href="@{/creditos}" class="btn-creditos">Créditos</a>
+
 </body>
 </html>

@@ -12,7 +12,7 @@
             erroMaximo: [[${erroMaximo}]]
         };
     </script>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style-grafico.css}" />
 </head>
 <body>
 <h1>Gráfico da Onda Transversal</h1>
@@ -23,7 +23,7 @@
 
 <!-- Formulário com evento de teclado -->
 <form id="tempoForm" onsubmit="mostrarPontoNoTempo(); return false;">
-    <label for="tempo">Escolha o tempo (0 a 9.9 segundos, de 0.1 em 0.1): </label>
+    <label for="tempo">Escolha o tempo para vermos o ponto <br>(0 a 10 segundos, de 0.1 em 0.1): </label>
     <input type="number" id="tempo" min="0" max="10" step="0.1" placeholder="Ex: 1.5">
     <button type="button" onclick="mostrarPontoNoTempo()">Mostrar Ponto</button>
 </form>

@@ -102,3 +102,18 @@ input[type="text"], input[type="number"] {
     width: 200px;
     text-align: center;
 }
+
+
+.btn-excluir {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-excluir:hover {
+    background-color: #d32f2f;
+}
+
+

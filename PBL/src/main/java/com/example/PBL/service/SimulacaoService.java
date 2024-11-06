@@ -27,4 +27,9 @@ public class SimulacaoService {
     public Simulacao buscarSimulacaoPorId(Long id_simulacao) {
         return simulacaoRepositorio.findById(id_simulacao).orElse(null);
     }
+
+    public void excluirSimulacao(Long idSimulacao) {
+        simulacaoRepositorio.deleteById(idSimulacao);
+    }
+
 }

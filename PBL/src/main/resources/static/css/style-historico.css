@@ -1,0 +1,140 @@
+/* Animações de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1b3a;
+    color: #e3e3e3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Estilo do título */
+h1 {
+    font-size: 2em;
+    color: #f2b6c0;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+/* Estilo da tabela */
+table {
+    width: 100%;
+    max-width: 80%;
+    border-collapse: collapse;
+    background-color: #24254a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    animation: slideIn 1s ease-in-out forwards;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+th {
+    background-color: #3a3b5a;
+    color: #f2b6c0;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+td {
+    color: #e3e3e3;
+    border-top: 1px solid #3a3b5a;
+}
+
+tr:hover {
+    background-color: #3b3c6b;
+}
+
+/* Estilo dos botões */
+.btn-ver, .btn-excluir{
+    display: inline-block;
+    padding: 8px 15px;
+    font-size: 0.9em;
+    color: #e3e3e3;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0 5px;
+}
+
+.btn-ver {
+    background-color: #24254a;
+    border: 1px solid #e3e3e3;
+}
+
+.btn-excluir {
+    background-color: #f44336;
+}
+
+.btn-voltar {
+    text-align: center;
+    padding: 10px 25px;
+    font-size: 1em;
+    color: #e3e3e3;
+    border: 1px solid #e3e3e3;
+    border-radius: 18px;
+    background-color: #24254a;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
+    margin-top: 10px;
+    width: 180px;
+}
+
+.btn-voltar:hover {
+    background-color: #3a3b5a;
+    color: #f2b6c0;
+    transform: scale(1.05);
+}
+
+
+.btn-ver:hover {
+    background-color: #3a3b5a;
+    color: #f2b6c0;
+}
+
+.btn-excluir:hover {
+    background-color: #d32f2f;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    table, th, td {
+        font-size: 0.9em;
+    }
+}

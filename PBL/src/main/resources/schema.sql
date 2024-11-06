@@ -1,3 +1,8 @@
+create database PBL_EC3
+
+use PBL_EC3
+
+
 -- Function para calcular a posição Y de um ponto da onda baseado em variáveis físicas
 CREATE FUNCTION CalcularPosicaoY(
     @frequencia FLOAT,

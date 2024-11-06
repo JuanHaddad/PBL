@@ -1,0 +1,167 @@
+/* Animação para entrada */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px); /* Começa ligeiramente abaixo */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Sobe para sua posição final */
+    }
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1b3a; /* Fundo escuro */
+    color: #e3e3e3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Barra superior */
+.header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.logo {
+    font-size: 1.5em;
+    color: #f2b6c0; /* Rosa suave */
+}
+
+.welcome-message {
+    font-size: 1.2em;
+    color: #f2b6c0;
+}
+
+/* Estilo dos Cartões */
+.menu-container {
+    display: flex;
+    gap: 20px;
+    max-width: 800px;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Permite que os cartões se ajustem em telas menores */
+}
+
+.menu-card {
+    background: radial-gradient(circle at top left, #3b3c6b, #24254a);
+    border-radius: 16px;
+    padding: 20px;
+    width: 45%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    align-items: center;
+    opacity: 0;
+    transition: transform 0.3s ease; /* Suaviza o efeito de scale */
+    animation: slideIn 0.8s ease-out forwards;
+}
+
+.menu-card:nth-child(1) {
+    animation-delay: 0.4s;
+}
+
+.menu-card:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+.menu-card:hover {
+    transform: scale(1.1);
+}
+
+.menu-card h2 {
+    font-size: 1.2em;
+    color: #f2b6c0;
+    margin-bottom: 0;
+}
+
+.menu-card h3 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+}
+
+.menu-card p {
+    font-size: 1.1em;
+    color: #e3e3e3;
+    margin: 0;
+}
+
+.btn {
+    padding: 10px 25px;
+    font-size: 1em;
+    color: #e3e3e3;
+    border: 1px solid #e3e3e3;
+    border-radius: 18px;
+    background-color: #24254a;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
+    margin-top: 10px;
+    width: 80%;
+}
+
+.btn:hover {
+    background-color: #3a3b5a;
+    color: #f2b6c0;
+    transform: scale(1.05);
+}
+
+
+/* Estilo do botão de Créditos com comportamento semelhante aos outros */
+.btn-creditos {
+    margin-top: 50px;
+    padding: 10px 25px;
+    font-size: 1em;
+    color: #e3e3e3;
+    background-color: #24254a; /* Mesmo fundo que os outros botões */
+    border: 1px solid #e3e3e3;
+    border-radius: 18px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, font-weight 0.3s ease;
+
+    /* Configuração de animação */
+    opacity: 0; /* Início invisível */
+    animation: fadeIn 1s ease-in-out forwards; /* Animação de fade-in */
+    animation-delay: 0.5s; /* Pequeno atraso para dar um efeito melhor */
+}
+
+.btn-creditos:hover {
+    background-color: #e3e3e3; /* Fundo claro no hover */
+    color: #1a1b3a; /* Cor do texto similar ao fundo da página */
+    font-weight: bold; /* Deixa a fonte mais grossa no hover */
+    transform: scale(1.03); /* Aumenta ligeiramente no hover */
+}

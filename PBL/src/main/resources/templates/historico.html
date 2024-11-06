@@ -2,11 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Histórico de Simulações</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style-historico.css}" />
 </head>
 <body>
 <h1>Histórico de Simulações</h1>
-
 <table>
     <tr>
         <th>ID</th>
@@ -14,7 +13,7 @@
         <th>Comprimento de Onda</th>
         <th>Duração</th>
         <th>Erro Máximo</th>
-        <th>Ação</th>
+        <th>Ações</th>
     </tr>
     <tr th:each="simulacao : ${historicoSimulacoes}">
         <td th:text="${simulacao.id_simulacao}"></td>
@@ -23,11 +22,14 @@
         <td th:text="${simulacao.duracao}"></td>
         <td th:text="${simulacao.erroMaximo}"></td>
         <td>
-            <a th:href="@{/resimularOnda(id_simulacao=${simulacao.id_simulacao})}" class="btn-ver">Ver Gráfico</a>
+            <a th:href="@{/resimularOnda(id_simulacao=${simulacao.id_simulacao})}" class="btn-ver">Ver Onda</a>
+            <a th:href="@{/excluirSimulacao(id_simulacao=${simulacao.id_simulacao})}" class="btn-excluir" onclick="return confirm('Tem certeza que deseja excluir esta simulação?');">Excluir</a>
         </td>
     </tr>
 </table>
 
+<!-- Botão para voltar ao menu inicial -->
+<br>
 <a href="/" class="btn-voltar">Voltar ao Menu</a>
 </body>
 </html>

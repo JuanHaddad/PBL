@@ -105,4 +105,15 @@ public class OndaController {
         return response;
     }
 
+    @GetMapping("/excluirSimulacao")
+    public String excluirSimulacao(@RequestParam("id_simulacao") Long idSimulacao) {
+        simulacaoService.excluirSimulacao(idSimulacao);
+        return "redirect:/historico";  // Redireciona de volta para a página do histórico
+    }
+
+    @GetMapping("/creditos")
+    public String exibirCreditos() {
+        return "creditos"; // Nome do arquivo HTML (creditos.html) para a página de créditos
+    }
+
 }
