@@ -1,5 +1,7 @@
 Pra funcionar esse projeto, deve estar instalado e devidamente configurado o sql server
- 
+
+IntelliJ: Vá em File > Invalidate Caches / Restart e reinicie o projeto.
+
 Pra isso baixe o pacote do sql management nesse link:
 https://aka.ms/ssmsfullsetup
 
@@ -19,5 +21,3 @@ Abra o seguinte app:
 #### SQL SERVER 2022 CONFIGURATION MANAGER
 
 lá você vai habilitar a conexão tcp/ip do seu banco
-
-concordo

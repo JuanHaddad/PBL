@@ -68,14 +68,15 @@ var chart = new Chart(ctx, {
         datasets: [{
             label: 'Onda Transversal',
             data: [],  // Inicialmente vazio
-            borderColor: 'rgba(75, 192, 192, 1)',
+            borderColor: '#f2b6c0',
             borderWidth: 2,
-            fill: false
+            fill: false,
+            pointRadius: 1,  // Diminui o tamanho do ponto para 1
         },
         {
             label: 'Ponto Fixo na Onda',
             data: [{ x: 1, y: 0 }],  // Inicialmente em (x = 1, y = 0)
-            borderColor: 'rgba(255, 0, 0, 1)',  // Ponto vermelho
+            borderColor: '#e3e3e3',  // Ponto vermelho
             borderWidth: 5,
             showLine: false,  // Mostra apenas o ponto, sem linha conectada
             pointRadius: 5,
@@ -89,12 +90,24 @@ var chart = new Chart(ctx, {
                 type: 'linear',
                 position: 'bottom',
                 min: 0,
-                max: 2
+                max: 2,
+                ticks: {
+                                    color: '#e3e3e3'  // Cor clara para os valores do eixo X
+                                },
+                                grid: {
+                                    color: 'rgba(227, 227, 227, 0.2)'  // Linhas do grid com tom claro
+                                }
             },
             y: {
                 beginAtZero: false,
                 min: -1,
-                max: 1
+                max: 1,
+                ticks: {
+                                                    color: '#e3e3e3'  // Cor clara para os valores do eixo X
+                                                },
+                                                grid: {
+                                                    color: 'rgba(227, 227, 227, 0.2)'  // Linhas do grid com tom claro
+                                                }
             }
         }
     }
