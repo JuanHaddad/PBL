@@ -83,6 +83,7 @@ public class OndaController {
     public String exibirMenuInicial() {
         return "menu";
     }
+
     @GetMapping("/historico")
     public String exibirHistorico(Model model) {
         List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();

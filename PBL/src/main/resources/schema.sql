@@ -76,3 +76,42 @@ BEGIN
     DEALLOCATE simulacoes_cursor;
 END;
 GO
+
+
+-- Stored Procedure para excluir dados relacionados na tabela grafico_saida
+CREATE PROCEDURE ExcluirSimulacaoRelacional
+    @idSimulacao BIGINT
+AS
+BEGIN
+    -- Exclui todos os registros na tabela grafico_saida relacionados ao id_simulacao fornecido
+    DELETE FROM grafico_saida WHERE id_simulacao = @idSimulacao;
+END;
+GO
+
+-- Trigger para chamar a stored procedure ExcluirSimulacaoRelacional ao excluir um registro em simulacoes
+CREATE TRIGGER TriggerExcluirSimulacaoRelacional
+ON simulacoes
+AFTER DELETE
+AS
+BEGIN
+    DECLARE @idSimulacao BIGINT;
+
+    -- Cursor para iterar sobre as linhas excluídas na tabela simulacoes
+    DECLARE deleted_cursor CURSOR FOR
+    SELECT id_simulacao FROM deleted;
+
+    OPEN deleted_cursor;
+    FETCH NEXT FROM deleted_cursor INTO @idSimulacao;
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        -- Chama a stored procedure para excluir os registros relacionados em grafico_saida
+        EXEC ExcluirSimulacaoRelacional @idSimulacao;
+
+        FETCH NEXT FROM deleted_cursor INTO @idSimulacao;
+    END
+
+    CLOSE deleted_cursor;
+    DEALLOCATE deleted_cursor;
+END;
+GO
