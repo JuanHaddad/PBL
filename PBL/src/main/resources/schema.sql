@@ -1,7 +1,6 @@
-create database PBL_EC3
-
-use PBL_EC3
-
+-- rodar o create antes do main e o resto depois do main!!!!
+-- create database PBL_EC3
+-- use PBL_EC3
 
 -- Function para calcular a posição Y de um ponto da onda baseado em variáveis físicas
 CREATE FUNCTION CalcularPosicaoY(

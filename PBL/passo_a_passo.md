@@ -9,21 +9,21 @@ Este guia detalha as etapas necessárias para configurar e executar o projeto. S
 ### 1.1 SQL Server 2022 e SQL Server Management Studio (SSMS)
 
 1. **Baixe e instale o SQL Server Management Studio** através deste link:
-    - [SSMS Full Setup](https://aka.ms/ssmsfullsetup)
+   - [SSMS Full Setup](https://aka.ms/ssmsfullsetup)
 2. **Durante a instalação**, será solicitada a configuração do tipo de Login (Autenticação). Escolha:
-    - **SQL Server + Windows Authentication**
-    - **Usuário:** `SA`
-    - **Senha:** `123456`
+   - **SQL Server + Windows Authentication**
+   - **Usuário:** `SA`
+   - **Senha:** `123456`
 
 3. **Habilite a Conexão TCP/IP**:
-    - Abra o aplicativo **SQL Server 2022 Configuration Manager**.
-    - Na aba de **Protocolos** do seu banco, habilite a conexão **TCP/IP** para permitir a conexão ao banco de dados.
+   - Abra o aplicativo **SQL Server 2022 Configuration Manager**.
+   - Na aba de **Protocolos** do seu banco, habilite a conexão **TCP/IP** para permitir a conexão ao banco de dados.
 
 ### 1.2 JDK 17 (Java Development Kit)
 
 1. **Instale o JDK 17**:
-    - Certifique-se de que o **Java 17 (JDK 17)** está instalado no computador.
-    - Caso não esteja, o IntelliJ IDE irá identificar e oferecer a opção de instalação automaticamente.
+   - Certifique-se de que o **Java 17 (JDK 17)** está instalado no computador.
+   - Caso não esteja, o IntelliJ IDE irá identificar e oferecer a opção de instalação automaticamente.
 
 ---
 
@@ -32,7 +32,14 @@ Este guia detalha as etapas necessárias para configurar e executar o projeto. S
 1. **Abra o SQL Server Management Studio (SSMS)** e conecte-se ao servidor com as credenciais configuradas.
 
 2. **Execute o Script de Criação de Banco de Dados (schema.sql)**:
-    - No SSMS, abra e execute o arquivo `schema.sql` para criar o banco de dados e todas as tabelas necessárias.
+   - **Antes de rodar o projeto**, execute apenas o comando para **criar o banco de dados**:
+     ```sql
+     CREATE DATABASE PBL_EC3;
+     ```
+   - Após o banco de dados ser criado, **rode o projeto** para que as tabelas sejam geradas automaticamente pelo Spring Boot.
+
+3. **Configuração das Funções, Stored Procedures e Triggers**:
+   - As funções, stored procedures e triggers são configuradas automaticamente ao iniciar o projeto Spring Boot, através da classe `DatabaseInitializer`. Isso garante que os cálculos e relacionamentos entre as tabelas `simulacoes` e `grafico_saida` sejam criados automaticamente.
 
 ---
 
@@ -41,10 +48,11 @@ Este guia detalha as etapas necessárias para configurar e executar o projeto. S
 1. **Abra o projeto no IntelliJ IDEA**.
 
 2. **Configure a Conexão JDBC no `application.properties`**:
-    - Verifique que a configuração do banco de dados em `application.properties` está correta para a conexão com o SQL Server, utilizando `SA` e `123456` como usuário e senha.
+   - Verifique que a configuração do banco de dados em `application.properties` está correta para a conexão com o SQL Server, utilizando `SA` e `123456` como usuário e senha.
 
 3. **Rode o `Main.java` para Inicializar o Projeto**:
-    - Execute a classe `Main.java` para que o Spring Boot inicialize o projeto e crie as tabelas nativas.
+   - Execute a classe `Main.java` para que o Spring Boot inicialize o projeto e crie as tabelas nativas.
+   - **Atenção**: A classe `DatabaseInitializer` dentro do package '**config**', foi configurada para aguardar alguns segundos antes de executar as funções e procedures para garantir que o contexto do banco esteja totalmente configurado.
 
 ---
 
@@ -54,10 +62,10 @@ Este guia detalha as etapas necessárias para configurar e executar o projeto. S
 Caso ocorra algum erro, revise os seguintes pontos:
 
 - **SQL Server**:
-    - Certifique-se de que os scripts de SQL foram executados corretamente. Em particular, rode os scripts de **Function**, **Stored Procedure** e **Trigger** no SQL Server.
+   - Certifique-se de que os scripts de SQL foram executados corretamente. Em particular, rode os scripts de **Function**, **Stored Procedure** e **Trigger** no SQL Server.
 
 - **Invalidate Caches / Restart no IntelliJ**:
-    - No IntelliJ, vá em **File > Invalidate Caches / Restart** e reinicie o projeto para garantir que todas as configurações e caches foram atualizados.
+   - No IntelliJ, vá em **File > Invalidate Caches / Restart** e reinicie o projeto para garantir que todas as configurações e caches foram atualizados.
 
 ---
 
@@ -75,7 +83,7 @@ O projeto segue a seguinte estrutura:
 ### Recursos Estáticos
 - **static/css**: Arquivos CSS.
 - **static/js**: Arquivos JavaScript.
-- **templates**: Contém os templates Thymeleaf `formulario.html`, `grafico.html`, `historico.html`, e `creditos.html`.
+- **templates**: Contém os templates Thymeleaf `menu.html`, `formulario.html`, `grafico.html`, `historico.html`, e `creditos.html`.
 
 ---
 
