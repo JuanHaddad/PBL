@@ -18,6 +18,7 @@ Este guia detalha as etapas necessárias para configurar e executar o projeto. S
 3. **Habilite a Conexão TCP/IP**:
    - Abra o aplicativo **SQL Server 2022 Configuration Manager**.
    - Na aba de **Protocolos** do seu banco, habilite a conexão **TCP/IP** para permitir a conexão ao banco de dados.
+   - ***IMPORTANTE***: Podem ter mais de um protocolo TCP/IP, na dúvida, habilite a permissão em todos!
 
 ### 1.2 JDK 17 (Java Development Kit)
 
@@ -31,7 +32,7 @@ Este guia detalha as etapas necessárias para configurar e executar o projeto. S
 
 1. **Abra o SQL Server Management Studio (SSMS)** e conecte-se ao servidor com as credenciais configuradas.
 
-2. **Execute o Script de Criação de Banco de Dados (schema.sql)**:
+2. **Execute o Script de Criação de Banco de Dados (query a ser executada no SQL Server.sql)**:
    - **Antes de rodar o projeto**, execute apenas o comando para **criar o banco de dados**:
      ```sql
      CREATE DATABASE PBL_EC3;
