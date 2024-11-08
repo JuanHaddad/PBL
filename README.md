@@ -74,6 +74,7 @@ Caso ocorra algum erro, revise os seguintes pontos:
 
 O projeto segue a seguinte estrutura:
 
+- **config**: Com a classe `DatabaseInitializer`, faz a manutenção dos triggers, procedures e functions.
 - **controller**: Responsável pelo controle das requisições, contém a classe `OndaController`.
 - **model**: Contém as classes de modelagem `Simulacao` e `SimuladorOnda`.
 - **repositorio**: Contém a interface `SimulacaoRepositorio` para operações de banco de dados.
