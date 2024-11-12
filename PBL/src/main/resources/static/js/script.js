@@ -13,49 +13,25 @@ console.log("Erro Máximo:", erroMaximo);
 
 // Variáveis de animação
 let t = 0;  // Tempo inicial
-const passoTempo = 0.0175;  // Passo de tempo (em segundos) NÃO MUDA ISSO DE FORMA ALGUMA
+const passoTempo = 0.027;  // Passo de tempo (em segundos) NÃO MUDAR ISSO
 const fps = 60;  // Frames por segundo da animação
 
-// Função para calcular o seno usando série de Taylor com ajuste de argumento
-function calcularSenoTaylor(valor, erroMaximo) {
-    valor = valor % (2 * Math.PI);
-    if (valor > Math.PI) valor -= 2 * Math.PI;
-    else if (valor < -Math.PI) valor += 2 * Math.PI;
-
-    let termo = valor;  // Primeiro termo da série (x^1 / 1!)
-    let soma = termo;
-    let n = 1;
-
-    while (Math.abs(termo) > erroMaximo) {
-        termo *= -1 * valor * valor / ((2 * n) * (2 * n + 1));
-        soma += termo;
-        n++;
-    }
-
-    return soma;
-}
-
-// Função para gerar os pontos da onda com base no tempo
+// Função para gerar os pontos da onda com base no tempo usando o backend
 function calcularPontosOnda(t) {
-    let dadosX = [];
-    let dadosY = [];
-    const passoX = 0.01;  // Reduzimos o passo ainda mais para capturar detalhes finos
-
-    for (let x = 0; x <= 2; x += passoX) {
-        let argumento = 2 * Math.PI * (frequencia * t - x / comprimentoOnda);
-        let y = calcularSenoTaylor(argumento, erroMaximo);
-        dadosX.push(x);
-        dadosY.push(y);
-    }
-
-    return { dadosX, dadosY };
+    return fetch(`/calcularPontosOnda?frequencia=${frequencia}&comprimentoOnda=${comprimentoOnda}&tempo=${t}&erroMaximo=${erroMaximo}`)
+        .then(response => response.json())
+        .then(data => {
+            return {
+                dadosX: data.dadosX,
+                dadosY: data.dadosY
+            };
+        });
 }
 
-// Função para calcular o valor da onda no ponto X fixo para o tempo t
+// Função para calcular o valor da onda no ponto X fixo para o tempo t usando o backend
 function calcularValorNoPonto(t) {
-    const posicaoX = 1;  // Mantém o ponto vermelho fixo em x = 1
-    const argumento = 2 * Math.PI * (frequencia * t - posicaoX / comprimentoOnda);
-    return calcularSenoTaylor(argumento, erroMaximo);
+    return fetch(`/calcularValorNoPonto?frequencia=${frequencia}&comprimentoOnda=${comprimentoOnda}&tempo=${t}&erroMaximo=${erroMaximo}`)
+        .then(response => response.json());
 }
 
 // Configurando o gráfico com Chart.js
@@ -71,43 +47,35 @@ var chart = new Chart(ctx, {
             borderColor: '#f2b6c0',
             borderWidth: 2,
             fill: false,
-            pointRadius: 1,  // Diminui o tamanho do ponto para 1
+            pointRadius: 1,
         },
-        {
-            label: 'Ponto Fixo na Onda',
-            data: [{ x: 1, y: 0 }],  // Inicialmente em (x = 1, y = 0)
-            borderColor: '#e3e3e3',  // Ponto vermelho
-            borderWidth: 5,
-            showLine: false,  // Mostra apenas o ponto, sem linha conectada
-            pointRadius: 5,
-            pointBackgroundColor: 'red'
-        }]
+            {
+                label: 'Ponto Fixo na Onda',
+                data: [{ x: 1, y: 0 }],
+                borderColor: '#e3e3e3',
+                borderWidth: 5,
+                showLine: false,
+                pointRadius: 5,
+                pointBackgroundColor: 'red'
+            }]
     },
     options: {
-        animation: false,  // Desabilitamos a animação nativa
+        animation: false,
         scales: {
             x: {
                 type: 'linear',
                 position: 'bottom',
                 min: 0,
                 max: 2,
-                ticks: {
-                                    color: '#e3e3e3'  // Cor clara para os valores do eixo X
-                                },
-                                grid: {
-                                    color: 'rgba(227, 227, 227, 0.2)'  // Linhas do grid com tom claro
-                                }
+                ticks: { color: '#e3e3e3' },
+                grid: { color: 'rgba(227, 227, 227, 0.2)' }
             },
             y: {
                 beginAtZero: false,
                 min: -1,
                 max: 1,
-                ticks: {
-                                                    color: '#e3e3e3'  // Cor clara para os valores do eixo X
-                                                },
-                                                grid: {
-                                                    color: 'rgba(227, 227, 227, 0.2)'  // Linhas do grid com tom claro
-                                                }
+                ticks: { color: '#e3e3e3' },
+                grid: { color: 'rgba(227, 227, 227, 0.2)' }
             }
         }
     }
@@ -118,19 +86,19 @@ function atualizarGrafico() {
     if (t <= duracaoSimulacao) {
         console.log("Atualizando gráfico, t = ", t);
 
-        // Calcula os pontos da onda para o tempo atual
-        let pontosOnda = calcularPontosOnda(t);
-        chart.data.labels = pontosOnda.dadosX;  // Atualizamos os valores de x
-        chart.data.datasets[0].data = pontosOnda.dadosY;  // Atualizamos os valores de y da onda
+        calcularPontosOnda(t).then(pontosOnda => {
+            chart.data.labels = pontosOnda.dadosX;
+            chart.data.datasets[0].data = pontosOnda.dadosY;
 
-        // Calcula o valor de y no ponto fixo em x = 1
-        let valorNoPonto = calcularValorNoPonto(t);
-        chart.data.datasets[1].data = [{ x: 1, y: valorNoPonto }];  // Atualiza a posição do ponto fixo em y
+            // Calcula o valor de y no ponto fixo em x = 1
+            calcularValorNoPonto(t).then(valorNoPonto => {
+                chart.data.datasets[1].data = [{ x: 1, y: valorNoPonto }];
+                chart.update();
 
-        chart.update();
-
-        t += passoTempo;  // Avançamos o tempo
-        setTimeout(atualizarGrafico, 1000 / fps);  // Próximo frame da animação
+                t += passoTempo;  // Avançamos o tempo
+                setTimeout(atualizarGrafico, 1000 / fps);  // Próximo frame da animação
+            });
+        });
     } else {
         console.log("Animação finalizada no TEMPO(t) = ", t);
     }
@@ -139,34 +107,40 @@ function atualizarGrafico() {
 // Iniciar a animação do gráfico
 atualizarGrafico();
 
+
 function mostrarPontoNoTempo() {
     const tempo = parseFloat(document.getElementById('tempo').value);
 
     if (!id_simulacao || isNaN(tempo) || tempo < 0 || tempo > 10) {
-            alert("Por favor, insira um valor válido para o tempo entre 0 e 10.");
-            return;
-        }
+        alert("Por favor, insira um valor válido para o tempo entre 0 e 10.");
+        return;
+    }
 
-    fetch(`/pontoNoTempo?id_simulacao=${id_simulacao}&tempo=${tempo}`)
+    // Certifique-se de incluir todos os parâmetros necessários na URL
+    const url = `/pontoNoTempo?id_simulacao=${id_simulacao}&frequencia=${frequencia}&comprimentoOnda=${comprimentoOnda}&tempo=${tempo}&erroMaximo=${erroMaximo}`;
+
+    fetch(url)
         .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Erro na requisição: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const posicaoY = data.posicaoY;
-                    if (posicaoY !== null) {
-                        chart.data.datasets[1].data = [{ x: 1, y: posicaoY }];
+            if (!response.ok) {
+                throw new Error(`Erro na requisição: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const posicaoY = data.posicaoY;
+            if (posicaoY !== null) {
+                // Atualiza o ponto fixo com o valor de Y no tempo solicitado
+                chart.data.datasets[1].data = [{ x: 1, y: posicaoY }];
 
-                        const { dadosX, dadosY } = calcularPontosOnda(tempo);
-                        chart.data.labels = dadosX;
-                        chart.data.datasets[0].data = dadosY;
-
-                        chart.update();
-                    } else {
-                        alert("Ponto não encontrado para o tempo especificado.");
-                    }
-                })
-                .catch(error => console.error("Erro ao buscar o ponto:", error));
+                // Atualiza a linha da onda para o tempo solicitado
+                calcularPontosOnda(tempo).then(pontosOnda => {
+                    chart.data.labels = pontosOnda.dadosX;
+                    chart.data.datasets[0].data = pontosOnda.dadosY;
+                    chart.update();
+                });
+            } else {
+                alert("Ponto não encontrado para o tempo especificado.");
+            }
+        })
+        .catch(error => console.error("Erro ao buscar o ponto:", error));
 }
