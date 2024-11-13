@@ -114,6 +114,9 @@ tr:hover {
     transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
     margin-top: 10px;
     width: 180px;
+    opacity: 0;
+        animation: fadeIn 1s ease-in-out forwards;
+        animation-delay: 0.5s;
 }
 
 .btn-voltar:hover {

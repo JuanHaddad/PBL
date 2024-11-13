@@ -146,3 +146,15 @@ button:hover {
     color: #f2b6c0;
     transform: scale(1.05);
 }
+
+.botoes {
+    display: flex;
+    gap: 20px; /* Espaço entre os botões */
+    width: 100%;
+    max-width: 460px;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 1.25s;
+}

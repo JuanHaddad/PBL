@@ -83,6 +83,9 @@ h1 {
     transition: background-color 0.3s, color 0.3s, transform 0.3s ease;
     width: 200px;
     text-align: center;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+    animation-delay: 0.5s;
 }
 
 .btn-voltar:hover {
