@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+
+// Decorator RestController para termos o nosso controller que retorna json
 @RestController
 public class CalculadoraController {
 
@@ -17,6 +19,8 @@ public class CalculadoraController {
         this.calculadora = calculadora;
     }
 
+
+//    Mapeamos qualquer get nessa url do /calcularPontosOnda para retornar o json com os pontos da onda no frontend
     @GetMapping("/calcularPontosOnda")
     public Map<String, List<Double>> calcularPontosOnda(
             @RequestParam("frequencia") double frequencia,
@@ -27,6 +31,8 @@ public class CalculadoraController {
         return calculadora.calcularPontosOnda(frequencia, comprimentoOnda, tempo, erroMaximo);
     }
 
+
+    // Mapeamos /calcularValorNoPonto pra quando o usuário inputa um certo segundo pra ver o ponto na onda, o retorno é o calculo exato de onde o ponto está
     @GetMapping("/calcularValorNoPonto")
     public double calcularValorNoPonto(
             @RequestParam("frequencia") double frequencia,

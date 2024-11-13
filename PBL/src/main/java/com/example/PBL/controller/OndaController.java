@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+// Controller que mapeia todos os endpoints possíveis, para retornar as telas corretas no thymeleaf
 @Controller
 public class OndaController {
 
@@ -25,6 +27,7 @@ public class OndaController {
         this.graficoSaidaRepositorio = graficoSaidaRepositorio;
     }
 
+    // Mapeia toda requisição no endpoint /simularOnda
     @GetMapping("/simularOnda")
     public String simularOnda(
             @RequestParam("frequencia") double frequencia,
@@ -50,19 +53,20 @@ public class OndaController {
         model.addAttribute("duracao", duracao);
         model.addAttribute("erroMaximo", erroMaximo);
 
-        // Recupera o histórico de simulações
-//        List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
-//        model.addAttribute("historicoSimulacoes", historicoSimulacoes);
-
+        // retorna apenas a tela do gráfico
         return "grafico";
     }
 
+
+    // Mapeamos o endpoint formulário apenas para retornar a tela do formulario.html
     @GetMapping("/formulario")
     public String exibirFormulario() {
         return "formulario";
     }
 
 
+
+    // Mapeamos o endpoint de /resimularOnda para o histórico ter a opção de mostrar novamente a simulação através do id dela
     @GetMapping("/resimularOnda")
     public String resimularOnda(@RequestParam("id_simulacao") Long id_simulacao, Model model) {
         Simulacao simulacao = simulacaoService.buscarSimulacaoPorId(id_simulacao);
@@ -77,13 +81,19 @@ public class OndaController {
         List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
         model.addAttribute("historicoSimulacoes", historicoSimulacoes);
 
+
+        // Retornando também a tela do gráfico daqui
         return "grafico";
     }
+
+
+    // Mapeando o endpoint para retornar ao menu principal
     @GetMapping("/")
     public String exibirMenuInicial() {
         return "menu";
     }
 
+    // Mapeando o endpoint para ir ao historico
     @GetMapping("/historico")
     public String exibirHistorico(Model model) {
         List<Simulacao> historicoSimulacoes = simulacaoService.buscarTodasSimulacoes();
