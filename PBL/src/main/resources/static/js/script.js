@@ -81,31 +81,61 @@ var chart = new Chart(ctx, {
     }
 });
 
-// Função para atualizar o gráfico com animação para a onda e o ponto fixo
+// Array para armazenar os dados pré-calculados
+let dadosOndaPrecalculados = [];
+
+// Função para pré-calcular os pontos da onda
+function precalcularDadosOnda() {
+    const promises = [];
+    for (let tempo = 0; tempo <= duracaoSimulacao; tempo += passoTempo) {
+        // Adiciona cada promessa de cálculo ao array de promessas
+        promises.push(calcularPontosOnda(tempo));
+    }
+
+    // Resolve todas as promessas e armazena os dados
+    return Promise.all(promises).then(resultados => {
+        dadosOndaPrecalculados = resultados; // Armazena os dados resolvidos
+    });
+}
+
+// Função para iniciar o gráfico de forma animada usando os dados pré-calculados
+function iniciarAnimacaoGrafico() {
+    t = 0;  // Reinicia o tempo
+    atualizarGrafico();  // Inicia a animação chamando a função de atualização
+}
+
+// Função para atualizar o gráfico com os dados pré-calculados
 function atualizarGrafico() {
     if (t <= duracaoSimulacao) {
         console.log("Atualizando gráfico, t = ", t);
 
-        calcularPontosOnda(t).then(pontosOnda => {
-            chart.data.labels = pontosOnda.dadosX;
-            chart.data.datasets[0].data = pontosOnda.dadosY;
+        const indice = Math.round(t / passoTempo);
+        const pontosOnda = dadosOndaPrecalculados[indice];
 
-            // Calcula o valor de y no ponto fixo em x = 1
-            calcularValorNoPonto(t).then(valorNoPonto => {
-                chart.data.datasets[1].data = [{ x: 1, y: valorNoPonto }];
-                chart.update();
+        // Atualiza os dados da onda
+        chart.data.labels = pontosOnda.dadosX;
+        chart.data.datasets[0].data = pontosOnda.dadosY;
 
-                t += passoTempo;  // Avançamos o tempo
-                setTimeout(atualizarGrafico, 1000 / fps);  // Próximo frame da animação
-            });
+        // Calcula e atualiza o valor no ponto fixo em x = 1
+        calcularValorNoPonto(t).then(valorNoPonto => {
+            chart.data.datasets[1].data = [{ x: 1, y: valorNoPonto }];
+            chart.update();
+
+            // Avança o tempo para o próximo quadro da animação
+            t += passoTempo;
+
+            // Chama novamente para o próximo quadro usando setTimeout
+            setTimeout(atualizarGrafico, 1000 / fps);  // Próximo frame da animação com controle de fps
         });
     } else {
         console.log("Animação finalizada no TEMPO(t) = ", t);
     }
 }
 
-// Iniciar a animação do gráfico
-atualizarGrafico();
+// Iniciar a animação após pré-calcular os dados
+precalcularDadosOnda().then(() => {
+    iniciarAnimacaoGrafico();  // Chama a função que inicia a animação
+});
 
 
 function mostrarPontoNoTempo() {
