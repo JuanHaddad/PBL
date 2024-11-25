@@ -61,6 +61,13 @@ var chart = new Chart(ctx, {
     },
     options: {
         animation: false,
+        plugins: {
+                    legend: {
+                        labels: {
+                            color: '#e3e3e3' // Define a cor das labels da legenda
+                        }
+                    }
+                },
         scales: {
             x: {
                 type: 'linear',
